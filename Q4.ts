@@ -4,15 +4,15 @@ function minEnergy(
   stations: number[],
   target: number
 ): number {
-  const n: number = Math.max(...shops, ...stations, target) + 1;
+  const maxNode: number = Math.max(...shops, ...stations, target) + 1;
   // Setup adjacency matrix using Floyd-Warshall algorithm
-  let arr: number[][] = new Array(n)
+  let arr: number[][] = new Array(maxNode)
     .fill(0)
-    .map(() => new Array(n).fill(Infinity));
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
+    .map(() => new Array(maxNode).fill(Infinity));
+  for (let i = 0; i < maxNode; i++) {
+    for (let j = 0; j < maxNode; j++) {
       arr[i][i] = 0;
-      if (i + 1 < n) arr[i][i + 1] = 1;
+      if (i + 1 < maxNode) arr[i][i + 1] = 1;
       if (i - 1 >= 0) arr[i][i - 1] = 1;
     }
   }
@@ -20,16 +20,16 @@ function minEnergy(
     for (let j = 0; j < stations.length; j++) {
       const x = stations[i];
       const y = stations[j];
-      if (x + 1 < n) arr[x][x + 1] = 1;
+      if (x + 1 < maxNode) arr[x][x + 1] = 1;
       if (x - 1 >= 0) arr[x][x - 1] = 1;
       arr[x][y] = 0;
     }
   }
 
   // Update adjacency matrix using Floyd-Warshall algorithm
-  for (let k = 0; k < n; k++) {
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < n; j++) {
+  for (let k = 0; k < maxNode; k++) {
+    for (let i = 0; i < maxNode; i++) {
+      for (let j = 0; j < maxNode; j++) {
         arr[i][j] = Math.min(arr[i][j], arr[i][k] + arr[k][j]);
       }
     }
