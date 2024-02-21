@@ -4,7 +4,7 @@ function minEnergy(
   stations: number[],
   target: number
 ): number {
-  const maxNode: number = Math.max(...shops, ...stations, target) + 1;
+  const maxNode: number = Math.max(...shops, ...stations, target, start) + 1;
   // Setup adjacency matrix using Floyd-Warshall algorithm
   let arr: number[][] = new Array(maxNode)
     .fill(0)
